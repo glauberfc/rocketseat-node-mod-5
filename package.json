@@ -6,6 +6,7 @@
   "dependencies": {
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
+    "pg": "^7.11.0",
     "sequelize": "^5.8.6"
   },
   "devDependencies": {
@@ -21,7 +22,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest",
     "start": "node dist/server.js",
-    "dev": "nodemon --exec 'yarn build && yarn start' --ignore __tests__ --ignore dist",
+    "dev": "nodemon --exec 'rm -rf dist && yarn build && yarn start' --ignore __tests__ --ignore dist",
     "build": "babel src -d dist"
   }
 }
