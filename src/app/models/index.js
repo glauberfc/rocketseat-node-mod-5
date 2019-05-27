@@ -3,8 +3,9 @@
 import fs from 'fs'
 import path from 'path'
 import Sequelize from 'sequelize'
-const basename = path.basename(__filename)
 import config from '../../config/database.js'
+
+const basename = path.basename(__filename)
 const db = {}
 
 const sequelize = new Sequelize(
