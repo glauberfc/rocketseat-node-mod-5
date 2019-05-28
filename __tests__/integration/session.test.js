@@ -59,4 +59,32 @@ describe('Authentication', () => {
 
     expect(response.body).toHaveProperty('token')
   })
+
+  it('should not be able to access private routes when not pass a token', async () => {
+    const response = await supertest(app).get('/dashboard')
+
+    expect(response.status).toBe(401)
+  })
+
+  it('should not be able to access private routes when pass a invalid token', async () => {
+    const response = await supertest(app)
+      .get('/dashboard')
+      .set('Authorization', `Bearer 1234`)
+
+    expect(response.status).toBe(401)
+  })
+
+  it('should be able to access private routes when pass a valid token', async () => {
+    const user = await Users.create({
+      name: 'Test',
+      email: 'test@test.com',
+      password: '123',
+    })
+
+    const response = await supertest(app)
+      .get('/dashboard')
+      .set('Authorization', `Bearer ${user.generateToken()}`)
+
+    expect(response.status).toBe(200)
+  })
 })

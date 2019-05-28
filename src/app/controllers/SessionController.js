@@ -9,5 +9,5 @@ export async function login(req, res) {
     return res.status(401).json({ message: 'Email or password incorrects' })
   }
 
-  return res.status(200).json({ user, token: user.generateToken() })
+  return res.status(200).json({ token: user.generateToken() })
 }
