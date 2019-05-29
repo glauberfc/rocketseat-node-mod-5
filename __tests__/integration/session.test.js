@@ -1,7 +1,7 @@
 import supertest from 'supertest'
 
 import truncate from '../utils/truncate'
-import { Users } from '../../src/app/models'
+import factory from '../factory'
 import app from '../../src/app'
 
 describe('Authentication', () => {
@@ -10,9 +10,7 @@ describe('Authentication', () => {
   })
 
   it('should be able to authenticate with valid credentials', async () => {
-    const user = await Users.create({
-      name: 'Test',
-      email: 'test@test.com',
+    const user = await factory.create('Users', {
       password: '123',
     })
 
@@ -27,11 +25,7 @@ describe('Authentication', () => {
   })
 
   it('should not be authenticate with invalid credentials', async () => {
-    const user = await Users.create({
-      name: 'Test',
-      email: 'test@test.com',
-      password: '123',
-    })
+    const user = await factory.create('Users')
 
     const response = await supertest(app)
       .post('/sessions')
@@ -44,9 +38,7 @@ describe('Authentication', () => {
   })
 
   it('should return jwt token when authenticated', async () => {
-    const user = await Users.create({
-      name: 'Test',
-      email: 'test@test.com',
+    const user = await factory.create('Users', {
       password: '123',
     })
 
@@ -75,11 +67,7 @@ describe('Authentication', () => {
   })
 
   it('should be able to access private routes when pass a valid token', async () => {
-    const user = await Users.create({
-      name: 'Test',
-      email: 'test@test.com',
-      password: '123',
-    })
+    const user = await factory.create('Users')
 
     const response = await supertest(app)
       .get('/dashboard')

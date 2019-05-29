@@ -1,5 +1,6 @@
 import { Users } from '../../src/app/models'
 import truncate from '../utils/truncate'
+import factory from '../factory'
 
 describe('Authentication', () => {
   beforeEach(async () => {
@@ -7,9 +8,7 @@ describe('Authentication', () => {
   })
 
   it('should encrypt user password', async () => {
-    const user = await Users.create({
-      name: 'Test',
-      email: 'test@test.com',
+    const user = await factory.create('Users', {
       password: '123',
     })
 
